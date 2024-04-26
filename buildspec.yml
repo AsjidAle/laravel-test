@@ -3,20 +3,18 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      php: 8.2 
+      php: 8.2
     commands:
       - apt-get update -y
+      - apt-get install -y libpq-dev libzip-dev php-pgsql
       - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-      - apt-get install -y libpq-dev libzip-dev
-      - apt-get install -y php-pgsql
-      - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-      - php composer-setup.php --install-dir=/usr/local/bin --filename=composer
-      - composer clear-cache
-      - composer install --verbose
   pre_build:
     commands:
       - composer install
       - npm install
+  build:
+    commands:
+      - # Add any additional build commands here
 artifacts:
   files:
     - '**/*'
